@@ -59,6 +59,18 @@ static void rtcp_callback(void*, void*, pj_ssize_t);
 
 void cleanup()
 {
+    if (uas_inv)
+    {
+        pjsip_tx_data* tdata;
+        pjsip_inv_end_session(uas_inv, 500, NULL, &tdata);
+        pjsip_inv_send_msg(uas_inv, tdata);
+    }
+    if (uac_inv)
+    {
+        pjsip_tx_data* tdata;
+        pjsip_inv_end_session(uac_inv, 500, NULL, &tdata);
+        pjsip_inv_send_msg(uac_inv, tdata);
+    }
     if (in_transport)
     {
         pjsip_transport_shutdown(in_transport);
